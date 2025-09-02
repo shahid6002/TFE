@@ -30,4 +30,4 @@ jobs:
         run: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
       - name: tflint
-        run: tflint modules/storage_account
+        run: tflint --chdir=modules/storage_account
