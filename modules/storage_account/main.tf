@@ -1,6 +1,9 @@
 terraform {
   required_providers {
-    azurerm = { source = "hashicorp/azurerm" version = "~> 3.0" }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
   }
 }
 
@@ -20,8 +23,7 @@ resource "azurerm_storage_account" "sa" {
 
   account_tier             = "Standard"
   account_replication_type = "LRS"
-  enable_https_traffic_only= true
-  allow_blob_public_access = false
+  #allow_blob_public_access = false
   min_tls_version          = "TLS1_2"
 
   tags = var.tags
