@@ -1,0 +1,33 @@
+name: Module CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      - name: terraform fmt
+        run: terraform fmt -check -recursive
+
+      - name: terraform init
+        working-directory: modules/storage_account
+        run: terraform init -backend=false
+
+      - name: terraform validate
+        working-directory: modules/storage_account
+        run: terraform validate
+
+      - name: Install tflint
+        run: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: tflint
+        run: tflint --chdir=modules/storage_account
